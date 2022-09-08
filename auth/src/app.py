@@ -1,5 +1,3 @@
-import trace
-
 from api import init_api  # noqa
 from cli_commands import get_superuser_creation_command
 from core.config import config
@@ -25,13 +23,6 @@ def main() -> Flask:
 
 
 app = main()
-
-
-@app.before_request
-def before_request():
-    request_id = request.headers.get("X-Request-Id")
-    if not request_id:
-        return make_response("X-Request-Id not found", 404)
 
 
 if __name__ == "__main__":
