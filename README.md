@@ -13,6 +13,7 @@ https://github.com/vladefr97/Auth_sprint_1
 - Список блокированных jti хранятся в **redis**
 - Основная база данных - **PostgreSQL**
 - Все компоненты системы запускаются через **docker**.
+- Мониторинг через **JAEGER**.
 
 ## Начало работы
  
@@ -43,6 +44,7 @@ docker-compose -f docker-compose.yml down
 
 ## Взаимодействие
 - Доступ к документации осуществляется через http://localhost/apidocs 
+- JAEGER UI доступен по адресу: http://localhost:16686
 
 # Проектная работа 6 спринта
 

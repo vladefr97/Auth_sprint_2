@@ -29,6 +29,9 @@ class Config(BaseSettings):
     sqlalchemy_track_modifications: bool = Field(default="True", env="SQLALCHEMY_TRACK_MODIFICATIONS")
     debug: bool = Field(default="True", env="DEBUG")
 
+    JAEGER_HOST: str = Field(default="localhost", env="JAEGER_HOST")
+    JAEGER_PORT: int = Field(default="6831", env="JAEGER_PORT")
+
 
 config: Config = Config()
 
