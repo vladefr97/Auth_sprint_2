@@ -2,8 +2,8 @@ from typing import Callable
 
 import click
 from core.models import DefaultUserRole
-from db.models import User
-from db.models.userrole import UserRole
+from db.relational.models import User
+from db.relational.models.userrole import UserRole
 from flask import Flask
 
 

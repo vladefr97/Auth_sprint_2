@@ -2,7 +2,7 @@ from typing import Any
 
 from http import HTTPStatus
 
-from db.models import User
+from db.relational.models import User
 from flask_jwt_extended import current_user, jwt_required
 from flask_restful import Resource, reqparse
 

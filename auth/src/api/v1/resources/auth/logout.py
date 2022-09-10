@@ -31,5 +31,5 @@ class UserLogoutAccessAPI(Resource):
         """
 
         jti = get_jwt()["jti"]
-        block_list.set(jti, "", ex=ACCESS_EXPIRES)
+        block_list.set_token(key=jti, expire=ACCESS_EXPIRES, value="")
         return {"message": "User logout"}, HTTPStatus.OK

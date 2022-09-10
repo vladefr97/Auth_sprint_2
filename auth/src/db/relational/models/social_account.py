@@ -1,9 +1,9 @@
-from db.connection import db
-from db.models.mixins import SavableMixin, TimeStampedMixin, UUIDMixin
+from db.relational.connection import db
+from db.relational.models.mixins import TimeStampedMixin, UUIDMixin
 from sqlalchemy.dialects.postgresql import UUID
 
 
-class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
+class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin):
     # TODO: вынести названия таблиц в один файл
     __tablename__ = "social_account"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
@@ -18,6 +18,10 @@ class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
         self.user_id = user_id
         self.social_id = social_id
         self.social_name = social_name
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def exists(cls, user_id: str, social_id: str, social_name: str) -> bool:

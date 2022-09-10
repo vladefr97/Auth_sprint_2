@@ -4,12 +4,12 @@ from typing import Dict
 
 from datetime import datetime
 
-from db.connection import db
-from db.models.mixins import SavableMixin, UUIDMixin
+from db.relational.connection import db
+from db.relational.models.mixins import UUIDMixin
 from sqlalchemy.dialects.postgresql import UUID
 
 
-class UserHistory(db.Model, UUIDMixin, SavableMixin):
+class UserHistory(db.Model, UUIDMixin):
     __tablename__ = "user_history"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
 
@@ -29,6 +29,10 @@ class UserHistory(db.Model, UUIDMixin, SavableMixin):
 
     def __repr__(self) -> str:
         return f"<User {self.user_id} logged in {self.timestamp}>"
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def return_all(cls) -> dict[str, list[dict[str, str]]]:

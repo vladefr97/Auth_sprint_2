@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Dict, List
 
-from db.connection import db
-from db.models.mixins import SavableMixin, TimeStampedMixin, UUIDMixin
+from db.relational.connection import db
+from db.relational.models.mixins import TimeStampedMixin, UUIDMixin
 from passlib.hash import pbkdf2_sha256 as sha256
 from sqlalchemy.dialects.postgresql import UUID
 
@@ -11,7 +11,7 @@ from sqlalchemy.dialects.postgresql import UUID
 EMAIL_MAX_LENGTH: int = 64
 
 
-class User(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
+class User(db.Model, UUIDMixin, TimeStampedMixin):
     # TODO: вынести названия таблиц и схем в константы
     __tablename__ = "user"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
@@ -32,6 +32,10 @@ class User(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
 
     def __repr__(self) -> str:
         return f"<User {self.login}>"
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
 
     @property
     def identity(self) -> str:

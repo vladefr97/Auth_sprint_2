@@ -3,7 +3,13 @@ from flask_restful import reqparse
 # Auth API
 auth_parser = reqparse.RequestParser()
 auth_parser.add_argument("login", help="This field cannot be blank", required=True)
-auth_parser.add_argument("password", help="This field cannot be blank")
+auth_parser.add_argument("password", help="This field cannot be blank", required=True)
+
+# Registration API
+registration_parser = reqparse.RequestParser()
+registration_parser.add_argument("login", help="This field cannot be blank", required=True)
+registration_parser.add_argument("password", help="This field cannot be blank", required=True)
+registration_parser.add_argument("email", help="This field cannot be blank", required=True)
 
 # Roles API
 create_role_parser = reqparse.RequestParser()
