@@ -1,5 +1,5 @@
 ## Адрес репозитория
-https://github.com/vladefr97/Auth_sprint_1
+https://github.com/vladefr97/Auth_sprint_2
 
 ### Авторы проекта:de
 [vladefr97](https://github.com/vladefr97)
