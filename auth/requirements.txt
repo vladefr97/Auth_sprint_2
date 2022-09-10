@@ -1,5 +1,4 @@
 orjson==3.4.1
-uvloop==0.14.0
 flasgger==0.9.5
 Flask-Migrate==3.1.0
 flask==2.2.2
@@ -26,5 +25,9 @@ Werkzeug==2.2.2
 zipp==3.8.1
 redis==4.3.4
 types-redis==4.3.17
+opentelemetry-api==1.11.1
+opentelemetry-sdk==1.11.1
+opentelemetry-instrumentation-flask==0.30b1
+opentelemetry-exporter-jaeger==1.11.1
 Authlib==1.0.1
 requests==2.28.1
