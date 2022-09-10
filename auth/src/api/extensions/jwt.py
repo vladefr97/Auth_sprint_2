@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 from api.extensions.block_list import get_blocklist
-from db.models.user import User
+from db.relational.models.user import User
 from flask import Flask
 from flask_jwt_extended import JWTManager
 

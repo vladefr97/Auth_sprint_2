@@ -2,9 +2,9 @@ import string
 from secrets import choice as secrets_choice
 
 from core.models import DefaultUserRole
-from db.models import User
-from db.models.social_account import SocialAccount
-from db.models.userrole import UserRole
+from db.relational.models import User
+from db.relational.models.social_account import SocialAccount
+from db.relational.models.userrole import UserRole
 
 
 def generate_random_string() -> str:

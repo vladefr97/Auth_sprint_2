@@ -7,7 +7,7 @@ from api.v1.blueprints.oauth.client import OAuthClient, OAuthClientCredentials, 
 from api.v1.blueprints.oauth.schema.yandex import YandexUserInfoSchema
 from api.v1.blueprints.oauth.utils import attach_social_account_to_user, register_user_if_not_exists
 from api.v1.utils import create_jwt_tokens
-from db.models.userrole import UserRole
+from db.relational.models.userrole import UserRole
 
 
 class YandexOAuthClientCredentials(OAuthClientCredentials):

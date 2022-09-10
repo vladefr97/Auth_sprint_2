@@ -1,8 +1,8 @@
-from core.config import cache
-from redis import StrictRedis  # type: ignore
+from db.cache import get_cache_instance
+from db.cache.base import BaseCache
 
-jwt_blocklist = StrictRedis(host=cache.host, port=cache.port, db=0, decode_responses=True)
+jwt_blocklist = get_cache_instance()
 
 
-def get_blocklist() -> StrictRedis:
+def get_blocklist() -> BaseCache:
     return jwt_blocklist
