@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from typing import Dict, List
+
 from uuid import UUID
 
 from db.connection import db
-from db.models.mixins import UUIDMixin, SavableMixin
+from db.models.mixins import SavableMixin, UUIDMixin
 
 
 class UserRole(db.Model, UUIDMixin, SavableMixin):

@@ -24,7 +24,7 @@ SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{db.USER}:{db.PASSWORD}@{db.HO
 
 class Config(BaseSettings):
     jwt_secret_key: str = Field(default="my_secret_key", env="JWT_SECRET_KEY")
-    app_secret_key:str = Field(default='app_secret_key',env="APP_SECRET_KEY")
+    app_secret_key: str = Field(default="app_secret_key", env="APP_SECRET_KEY")
     superuser_login: str = Field(default="su", env="SUPERUSER_LOGIN")
     superuser_password: str = Field(default="123qwe", env="SUPERUSER_PASSWORD")
     sqlalchemy_track_modifications: bool = Field(default="True", env="SQLALCHEMY_TRACK_MODIFICATIONS")

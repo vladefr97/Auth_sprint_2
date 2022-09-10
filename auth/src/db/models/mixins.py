@@ -1,9 +1,8 @@
 import datetime
 import uuid
 
-from sqlalchemy.dialects.postgresql import UUID
-
 from db.connection import db
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class UUIDMixin:

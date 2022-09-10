@@ -1,6 +1,6 @@
+from api.v1.blueprints.oauth import init_oauth
 from flask import Flask
 
-from api.v1.blueprints.oauth import init_oauth
 from .jwt import init_jwt
 from .swagger import init_swagger
 

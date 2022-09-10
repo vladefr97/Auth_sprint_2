@@ -1,11 +1,12 @@
 from core.config import SQLALCHEMY_DATABASE_URI, config
 from db.connection import db
 from flask import Flask
-from flask_migrate import Migrate, upgrade
+from flask_migrate import Migrate
 
+from .models.social_account import SocialAccount  # pylint: disable=W0611 # noqa
 from .models.user import User  # pylint: disable=W0611 # noqa
 from .models.userrole import UserRole  # pylint: disable=W0611 # noqa
-from .models.social_account import SocialAccount # pylint: disable=W0611 # noqa
+
 migrate = Migrate()
 
 

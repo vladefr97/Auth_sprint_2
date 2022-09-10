@@ -5,11 +5,11 @@ from typing import Dict
 from datetime import datetime
 
 from db.connection import db
-from db.models.mixins import UUIDMixin, SavableMixin
+from db.models.mixins import SavableMixin, UUIDMixin
 from sqlalchemy.dialects.postgresql import UUID
 
 
-class UserHistory(db.Model, UUIDMixin,SavableMixin):
+class UserHistory(db.Model, UUIDMixin, SavableMixin):
     __tablename__ = "user_history"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
 

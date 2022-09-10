@@ -1,7 +1,6 @@
-from sqlalchemy.dialects.postgresql import UUID
-
 from db.connection import db
-from db.models.mixins import TimeStampedMixin, UUIDMixin, SavableMixin
+from db.models.mixins import SavableMixin, TimeStampedMixin, UUIDMixin
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
@@ -21,10 +20,8 @@ class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin, SavableMixin):
         self.social_name = social_name
 
     @classmethod
-    def exists(cls, user_id: str, social_id: str, social_name: str):
-        return cls.query.filter_by(
-            user_id=user_id, social_id=social_id, social_name=social_name
-        ).first()
+    def exists(cls, user_id: str, social_id: str, social_name: str) -> bool:
+        return bool(cls.query.filter_by(user_id=user_id, social_id=social_id, social_name=social_name).first())
 
     def __repr__(self) -> str:
         return f"<SocialAccount {self.social_name}:{self.user_id}>"
