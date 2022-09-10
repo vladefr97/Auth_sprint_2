@@ -77,7 +77,7 @@ class UserLoginChangeAPI(Resource):
           429:
             description: Too many requests. Limit in interval seconds.
         """
-        # TODO: проверку существующего логина
+        # TODO: сделать проверку существующего логина
 
         data = change_login_parser.parse_args()
 
