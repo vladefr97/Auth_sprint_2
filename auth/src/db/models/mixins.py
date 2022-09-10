@@ -1,8 +1,9 @@
 import datetime
 import uuid
 
-from db.connection import db
 from sqlalchemy.dialects.postgresql import UUID
+
+from db.connection import db
 
 
 class UUIDMixin:
@@ -25,3 +26,11 @@ class TimeStampedMixin:
         default=datetime.datetime.utcnow,
         onupdate=datetime.datetime.utcnow,
     )
+
+
+class SavableMixin:
+    __abstract__ = True
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()

@@ -1,22 +1,17 @@
 from __future__ import annotations
 
 from typing import Dict, List
-
 from uuid import UUID
 
 from db.connection import db
-from db.models.mixins import UUIDMixin
+from db.models.mixins import UUIDMixin, SavableMixin
 
 
-class UserRole(db.Model, UUIDMixin):
+class UserRole(db.Model, UUIDMixin, SavableMixin):
     __tablename__ = "role"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
 
     role_type = db.Column(db.String)
-
-    def save_to_db(self) -> None:
-        db.session.add(self)
-        db.session.commit()
 
     @classmethod
     def return_all(cls) -> List[Dict[str, str]]:
