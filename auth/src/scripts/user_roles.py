@@ -1,6 +1,6 @@
 from core.models import DefaultUserRole
-from db.connection import get_db_instance
-from db.models.userrole import UserRole
+from db.relational.connection import get_db_instance
+from db.relational.models.userrole import UserRole
 
 
 def create_default_user_roles() -> None:

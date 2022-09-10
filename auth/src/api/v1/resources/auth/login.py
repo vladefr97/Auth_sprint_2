@@ -4,8 +4,8 @@ from http import HTTPStatus
 
 from api.v1.parsers import auth_parser
 from api.v1.utils import create_jwt_tokens, save_user_to_history
-from db.models.user import User
-from db.models.userrole import UserRole
+from db.relational.models.user import User
+from db.relational.models.userrole import UserRole
 from flask_restful import Resource
 
 

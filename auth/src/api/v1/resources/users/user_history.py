@@ -3,7 +3,8 @@ from typing import Dict
 from http import HTTPStatus
 
 from api.v1.scheme import UserHistoryPaginationScheme, UserHistoryScheme
-from db.models.user_history import UserHistory
+from core.utils import rate_limit
+from db.relational.models.user_history import UserHistory
 from flask import request
 from flask_jwt_extended import current_user, jwt_required
 from flask_restful import Resource
@@ -11,6 +12,7 @@ from flask_sqlalchemy import Pagination
 
 
 class UserAllHistoryAPI(Resource):
+    @rate_limit()
     @jwt_required()
     def get(self) -> tuple[UserHistoryPaginationScheme, int]:
         """

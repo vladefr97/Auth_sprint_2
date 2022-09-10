@@ -4,8 +4,8 @@ from typing import Dict, List
 
 from uuid import UUID
 
-from db.connection import db
-from db.models.mixins import UUIDMixin
+from db.relational.connection import db
+from db.relational.models.mixins import UUIDMixin
 
 
 class UserRole(db.Model, UUIDMixin):

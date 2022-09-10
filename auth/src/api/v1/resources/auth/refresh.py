@@ -5,7 +5,7 @@ from http import HTTPStatus
 from api.extensions.block_list import get_blocklist
 from api.v1.resources.auth.logout import ACCESS_EXPIRES
 from api.v1.utils import create_jwt_tokens
-from db.models.userrole import UserRole
+from db.relational.models.userrole import UserRole
 from flask_jwt_extended import current_user, get_jwt, jwt_required
 from flask_restful import Resource
 

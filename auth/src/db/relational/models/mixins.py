@@ -1,7 +1,7 @@
 import datetime
 import uuid
 
-from db.connection import db
+from db.relational.connection import db
 from sqlalchemy.dialects.postgresql import UUID
 
 

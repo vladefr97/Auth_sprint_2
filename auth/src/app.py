@@ -10,9 +10,12 @@ from scripts import create_default_user_roles  # noqa
 configure_tracer()
 
 
+
+#
 def main() -> Flask:
     app = Flask(__name__)
     app.config["JWT_SECRET_KEY"] = config.jwt_secret_key
+    app.config["SECRET_KEY"] = config.app_secret_key
     init_db(app)
     init_migrate(app)
     init_api(app)

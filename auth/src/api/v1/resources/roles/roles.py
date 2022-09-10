@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 from api.v1.decorators import superuser_required
 from api.v1.parsers import change_role_parser, create_role_parser, delete_role_parser
-from db.models.userrole import UserRole
+from db.relational.models.userrole import UserRole
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
