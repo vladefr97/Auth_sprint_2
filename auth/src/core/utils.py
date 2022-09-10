@@ -21,8 +21,8 @@ def rate_limit(limit=RATE_LIMIT, interval=RATE_INTERVAL):
 
             if current_requests_count and int(current_requests_count) >= limit:
                 return {
-                           "message": f"Too many requests. Limit {limit} in {interval} seconds",
-                       }, HTTPStatus.TOO_MANY_REQUESTS
+                    "message": f"Too many requests. Limit {limit} in {interval} seconds",
+                }, HTTPStatus.TOO_MANY_REQUESTS
 
             pipe = cache.pipeline()
             pipe.incr(key, 1)
