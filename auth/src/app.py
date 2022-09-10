@@ -3,7 +3,7 @@ from cli_commands import get_superuser_creation_command
 from core.config import config
 from core.tracer import configure_tracer
 from db import init_db, init_migrate  # noqa
-from flask import Flask, make_response, request  # noqa
+from flask import Flask  # noqa
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from scripts import create_default_user_roles  # noqa
 
