@@ -4,7 +4,6 @@ from http import HTTPStatus
 
 from api.v1.parsers import registration_parser
 from api.v1.utils import create_jwt_tokens, save_user_to_history
-from core.models import DefaultUserRole
 from db.relational.models.user import User
 from db.relational.models.userrole import UserRole
 from flask_restful import Resource
@@ -53,20 +52,20 @@ class UserRegistrationAPI(Resource):
         if not data["login"] or not data["password"] or not data["email"]:
             return {}, HTTPStatus.BAD_REQUEST
 
-        if User.find_by_login(data["login"]):
-            return {"message": "User {} already exists".format(data["login"])}, HTTPStatus.CONFLICT
+        registered_user = User.find_by_login_or_email(login=data["login"], email=data["email"])
+        if registered_user:
+            return {
+                "message": f"User with login: {registered_user.login} or"
+                f" email: {registered_user.email} already exists"
+            }, HTTPStatus.CONFLICT
 
-        role_name = DefaultUserRole.USER.value
-        role_model = UserRole.get_role(user_role_type=role_name)
-        new_user = User(
-            login=data["login"],
-            password=User.generate_hash(data["password"]),
-            user_role=role_model.id,
-            email=data["email"],
+        registered_user = User.save_user_with_default_role(
+            login=data["login"], email=data["email"], password=data["password"]
         )
-        new_user.save_to_db()
 
-        save_user_to_history(new_user)
-        tokens = create_jwt_tokens(user_login=data["login"], user_role=role_name)
+        role_model = UserRole.find_by_id(role_id=registered_user.user_role)
+
+        save_user_to_history(registered_user)
+        tokens = create_jwt_tokens(user_login=registered_user.login, user_role=role_model.role_type)
 
         return tokens.dict(), HTTPStatus.CREATED

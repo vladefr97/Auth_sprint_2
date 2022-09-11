@@ -23,4 +23,4 @@ def main() -> Flask:
 app = main()
 
 if __name__ == "__main__":
-    app.run(debug=config.DEBUG,ssl_context="adhoc")
+    app.run(debug=config.DEBUG)

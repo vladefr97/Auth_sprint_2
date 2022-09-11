@@ -1,14 +1,25 @@
 from __future__ import annotations
 
-from typing import Dict, List
+from typing import Dict, List, Optional
 
+import string
+from secrets import choice as secrets_choice
+
+from core.models import DefaultUserRole
 from db.relational.connection import db
 from db.relational.models.mixins import TimeStampedMixin, UUIDMixin
+
+# TODO: вынести в отдельный файл
+from db.relational.models.userrole import UserRole
 from passlib.hash import pbkdf2_sha256 as sha256
 from sqlalchemy.dialects.postgresql import UUID
 
-# TODO: вынести в отдельный файл
 EMAIL_MAX_LENGTH: int = 64
+
+
+def generate_random_string() -> str:
+    alphabet = string.ascii_letters + string.digits
+    return "".join(secrets_choice(alphabet) for _ in range(16))
 
 
 class User(db.Model, UUIDMixin, TimeStampedMixin):
@@ -37,6 +48,13 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def save_user_with_default_role(cls, login: str, email: str, password: str) -> User:
+        role_model = UserRole.get_role(user_role_type=DefaultUserRole.USER.value)
+        user = User(email=email, login=login, password=password, user_role=role_model.id)
+        user.save_to_db()
+        return user
+
     @property
     def identity(self) -> str:
         """
@@ -45,6 +63,22 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
         attribute or property that provides the unique id of the user instance
         """
         return str(self.id)
+
+    @classmethod
+    def get_random_user_password(self) -> str:
+        return User.generate_hash(generate_random_string())
+
+    @classmethod
+    def find_by_login_or_email(cls, email: str, login: str) -> Optional[User]:
+        user = cls.find_by_login(login=login)
+        if user:
+            return user
+
+        user = cls.find_by_email(email=email)
+        if user:
+            return user
+
+        return None
 
     @classmethod
     def find_by_login(cls, login: str) -> User:

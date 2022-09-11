@@ -1,4 +1,5 @@
 from db.relational.connection import db
+from db.relational.models import User
 from db.relational.models.mixins import TimeStampedMixin, UUIDMixin
 from sqlalchemy.dialects.postgresql import UUID
 
@@ -22,6 +23,11 @@ class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin):
     def save_to_db(self) -> None:
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def attach_social_account_to_user(cls, social_name: str, social_id: str, user: User) -> None:
+        if not SocialAccount.exists(user_id=user.id, social_id=social_id, social_name=social_name):
+            SocialAccount(user_id=user.id, social_id=social_id, social_name=social_name).save_to_db()
 
     @classmethod
     def exists(cls, user_id: str, social_id: str, social_name: str) -> bool:
