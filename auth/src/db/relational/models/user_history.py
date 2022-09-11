@@ -1,13 +1,10 @@
-from __future__ import annotations
-
+from datetime import datetime
 from typing import Dict
 
-from datetime import datetime
+from sqlalchemy.dialects.postgresql import UUID
 
 from db.relational.connection import db
 from db.relational.models.mixins import UUIDMixin
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.dialects.postgresql import UUID
 
 
 class UserHistoryMixin(UUIDMixin):
@@ -17,13 +14,15 @@ class UserHistoryMixin(UUIDMixin):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
-class UserHistory(db.Model, UserHistoryMixin):
+class UserHistory(db.Model, UUIDMixin):
     __tablename__ = "user_history"
     __table_args__ = {"extend_existing": True, "schema": "auth"}
 
-    user_id = db.Column(
-        "user_id", UUID(as_uuid=True), db.ForeignKey("auth.user.id", ondelete="cascade"), nullable=False
-    )
+    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("auth.user.id", ondelete="cascade"), nullable=False)
+    user_agent = db.Column(db.Text, nullable=False)
+    ip_address = db.Column(db.String(20), nullable=False)
+    url = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self, **kwargs: str):
         super().__init__(**kwargs)
@@ -54,14 +53,3 @@ class UserHistory(db.Model, UserHistoryMixin):
         num_rows_deleted = db.session.query(cls).delete()
         db.session.commit()
         return {"message": "{} row(s) deleted".format(num_rows_deleted)}
-
-
-class UserHistoryTemp(db.Model, UserHistoryMixin):
-    __tablename__ = "user_history_temp"
-    __table_args__ = UniqueConstraint("id", "timestamp"), {
-        "extend_existing": True,
-        "schema": "auth",
-        "postgresql_partition_by": "RANGE (timestamp)",
-    }
-
-    user_id = db.Column("user_id", UUID(as_uuid=True), nullable=False)
