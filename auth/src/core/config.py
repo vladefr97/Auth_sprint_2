@@ -12,7 +12,7 @@ class Config(BaseSettings):
     DEBUG: bool = Field(default="True", env="DEBUG")
     JAEGER_HOST: str = Field(default="localhost", env="JAEGER_HOST")
     JAEGER_PORT: int = Field(default="6831", env="JAEGER_PORT")
-    REDIS_DSN: RedisDsn = Field(default="redis://user:pass@localhost:6379", env="REDIS_DSN")
+    REDIS_DSN: RedisDsn = Field(default="redis://:@localhost:6379", env="REDIS_DSN")
     POSTGRES_DSN: PostgresDsn = Field(
         default="postgresql+psycopg2://app:123qwe@localhost:5432/movies_database", env="POSTGRES_DSN"
     )
