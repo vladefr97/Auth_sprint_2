@@ -4,8 +4,8 @@ from typing import Dict
 
 from datetime import datetime
 
-from db.connection import db
-from db.models.mixins import UUIDMixin
+from db.relational.connection import db
+from db.relational.models.mixins import UUIDMixin
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 
