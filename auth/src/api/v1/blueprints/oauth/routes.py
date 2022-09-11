@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Dict, Type
 
 from flask import request
@@ -11,12 +12,17 @@ OAuthClients: Dict[str, Type[OAuthClient]] = {OAuthClientName.YANDEX.value: Yand
 
 @oauth_blueprint.route("/login/<provider>")
 def provider_login(provider: str):
-    oauth_client = OAuthClients[provider]()
-    return oauth_client.get_redirect_uri()
+    if provider in OAuthClients:
+        oauth_client = OAuthClients[provider]()
+        return oauth_client.get_redirect_uri()
+    else:
+        return "Provider not found", HTTPStatus.NOT_FOUND
 
 
 # TODO: привести к формату api/v1?
 @oauth_blueprint.route("/auth/<provider>")
 def auth_provider(provider: str):
-    oauth_client = OAuthClients[provider]()
-    return oauth_client.get_user_info(request=request)
+    if provider in OAuthClients:
+        oauth_client = OAuthClients[provider]()
+        return oauth_client.get_user_info(request=request)
+    return "Provider not found", HTTPStatus.NOT_FOUND
