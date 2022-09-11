@@ -1,5 +1,3 @@
-from typing import Any, Union
-
 from datetime import timedelta
 
 from pydantic import BaseSettings, Field, PostgresDsn, RedisDsn
@@ -25,7 +23,7 @@ SQLALCHEMY_DATABASE_URI = config.POSTGRES_DSN
 settingsSwagger: dict[str, int] = {
     "uiversion": 3,
 }
-templateSwagger: dict[str, Union[Any]] = {
+templateSwagger: dict[str, dict] = {
     "openapi": "2.0.0",
     "info": {
         "title": "Auth service, Team 6",

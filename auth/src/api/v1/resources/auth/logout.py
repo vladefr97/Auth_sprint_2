@@ -1,5 +1,3 @@
-from typing import Any
-
 from http import HTTPStatus
 
 from api.extensions.block_list import get_blocklist
@@ -14,7 +12,7 @@ block_list = get_blocklist()
 
 class UserLogoutAccessAPI(Resource):
     @jwt_required()
-    def post(self) -> tuple[dict[str, Any], int]:
+    def post(self) -> tuple[dict, type(HTTPStatus)]:
         """
         Logout access token method for users
         ---

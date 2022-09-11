@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import orjson
 from pydantic import BaseModel as PydanticBaseModel
@@ -25,7 +25,7 @@ class UserHistoryScheme(BaseModel):
 class UserHistoryPaginationScheme(BaseModel):
     has_next: bool
     has_prev: bool
-    items: Optional[List[UserHistoryScheme]]
+    items: Optional[list[UserHistoryScheme]]
     next_num: Optional[int]
     page: int
     pages: int

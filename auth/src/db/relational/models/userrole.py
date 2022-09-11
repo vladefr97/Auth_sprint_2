@@ -1,7 +1,3 @@
-from __future__ import annotations
-
-from typing import Dict, List
-
 from uuid import UUID
 
 from db.relational.connection import db
@@ -19,8 +15,8 @@ class UserRole(db.Model, UUIDMixin):
         db.session.commit()
 
     @classmethod
-    def return_all(cls) -> List[Dict[str, str]]:
-        def to_json(user_role: UserRole) -> Dict[str, str]:
+    def return_all(cls) -> list[dict[str, str]]:
+        def to_json(user_role: UserRole) -> dict[str, str]:
             return {"role": user_role.role_type, "id": str(user_role.id)}
 
         return [to_json(x) for x in UserRole.query.all()]
@@ -31,9 +27,9 @@ class UserRole(db.Model, UUIDMixin):
         db.session.commit()
 
     @classmethod
-    def get_role(cls, user_role_type: str) -> UserRole:
+    def get_role(cls, user_role_type: str):
         return cls.query.filter_by(role_type=user_role_type).first()
 
     @classmethod
-    def find_by_id(cls, role_id: UUID) -> UserRole:  # noqa
+    def find_by_id(cls, role_id: UUID):  # noqa
         return cls.query.filter_by(id=role_id).first()

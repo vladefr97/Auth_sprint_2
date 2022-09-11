@@ -1,5 +1,3 @@
-from typing import Any
-
 from http import HTTPStatus
 
 from db.relational.models import User
@@ -15,7 +13,7 @@ change_login_parser.add_argument("new_login", help="This field cannot be blank",
 
 class UserPasswordChangeAPI(Resource):
     @jwt_required()
-    def put(self) -> tuple[dict[str, Any], int]:
+    def put(self) -> tuple[dict, type(HTTPStatus)]:
         """
         Change password method for users
         ---
@@ -51,7 +49,7 @@ class UserPasswordChangeAPI(Resource):
 
 class UserLoginChangeAPI(Resource):
     @jwt_required()
-    def put(self) -> tuple[dict[str, Any], int]:
+    def put(self) -> tuple[dict, type(HTTPStatus)]:
         """
         Change login method for users
         ---

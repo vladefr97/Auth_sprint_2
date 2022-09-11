@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from typing import Dict, Type
 
 from flask import request
 
@@ -7,7 +6,7 @@ from .blueprint import oauth_blueprint
 from .client import OAuthClient, OAuthClientName
 from .clients.yandex import YandexOAuthClient
 
-OAuthClients: Dict[str, Type[OAuthClient]] = {OAuthClientName.YANDEX.value: YandexOAuthClient}
+OAuthClients: dict[str, type(OAuthClient)] = {OAuthClientName.YANDEX.value: YandexOAuthClient}
 
 
 @oauth_blueprint.route("/login/<provider>")

@@ -1,5 +1,3 @@
-from typing import Dict
-
 from http import HTTPStatus
 
 from api.extensions.rate_limit import rate_limiter
@@ -76,5 +74,5 @@ class UserAllHistoryAPI(Resource):
 
         return pagination_schema.dict(), HTTPStatus.OK
 
-    def delete(self) -> Dict[str, str]:
+    def delete(self) -> dict[str, str]:
         return UserHistory.delete_all()

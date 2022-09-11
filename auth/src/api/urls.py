@@ -1,5 +1,3 @@
-from typing import List, Tuple, Type
-
 from api.v1.resources.auth import (
     TokenRefreshAPI,
     UserLoginAPI,
@@ -14,7 +12,7 @@ from api.v1.resources.users.user_role import UserRoleAPI
 from flask_restful import Resource
 
 V1_PREFIX = "/api/v1"
-urls: List[Tuple[Type[Resource], str]] = [
+urls: list[tuple[type(Resource), str]] = [
     (UserRegistrationAPI, V1_PREFIX + "/registration"),
     (UserLoginAPI, V1_PREFIX + "/login"),
     (UserLogoutAccessAPI, V1_PREFIX + "/logout"),

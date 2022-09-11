@@ -15,10 +15,8 @@ class SocialAccount(db.Model, UUIDMixin, TimeStampedMixin):
     social_name = db.Column(db.String(length=100), nullable=False)
     db.UniqueConstraint(social_id, social_name)
 
-    def __init__(self, user_id: UUID, social_id: str, social_name: str):
-        self.user_id = user_id
-        self.social_id = social_id
-        self.social_name = social_name
+    def __init__(self, **kwargs: str):
+        super().__init__(**kwargs)
 
     def save_to_db(self) -> None:
         db.session.add(self)

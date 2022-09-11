@@ -1,7 +1,3 @@
-from __future__ import annotations
-
-from typing import Dict, List, Optional
-
 import string
 from secrets import choice as secrets_choice
 
@@ -33,13 +29,8 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
     user_role = db.Column(UUID(as_uuid=True), db.ForeignKey("auth.role.id", ondelete="cascade"))
     email = db.Column(db.String(length=EMAIL_MAX_LENGTH), nullable=False, unique=True)
 
-    def __init__(
-        self, login: str = login, password: str = password, user_role: UUID = user_role, email: str = email
-    ) -> None:
-        self.login = login
-        self.password = password
-        self.user_role = user_role
-        self.email = email
+    def __init__(self, **kwargs: str):
+        super().__init__(**kwargs)
 
     def __repr__(self) -> str:
         return f"<User {self.login}>"
@@ -49,7 +40,7 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
         db.session.commit()
 
     @classmethod
-    def save_user_with_default_role(cls, login: str, email: str, password: str) -> User:
+    def save_user_with_default_role(cls, login: str, email: str, password: str) -> str:
         role_model = UserRole.get_role(user_role_type=DefaultUserRole.USER.value)
         user = User(email=email, login=login, password=password, user_role=role_model.id)
         user.save_to_db()
@@ -69,7 +60,7 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
         return User.generate_hash(generate_random_string())
 
     @classmethod
-    def find_by_login_or_email(cls, email: str, login: str) -> Optional[User]:
+    def find_by_login_or_email(cls, email: str, login: str) -> str:
         user = cls.find_by_login(login=login)
         if user:
             return user
@@ -77,30 +68,30 @@ class User(db.Model, UUIDMixin, TimeStampedMixin):
         user = cls.find_by_email(email=email)
         if user:
             return user
-
+        # TODO: вернуть ошибку?
         return None
 
     @classmethod
-    def find_by_login(cls, login: str) -> User:
+    def find_by_login(cls, login: str) -> str:
         return cls.query.filter_by(login=login).first()
 
     @classmethod
-    def find_by_email(cls, email: str) -> User:
+    def find_by_email(cls, email: str) -> str:
         return cls.query.filter_by(email=email).first()
 
     @classmethod
-    def find_by_id(cls, user_id: str) -> User:
+    def find_by_id(cls, user_id: str) -> str:
         return cls.query.filter_by(id=user_id).first()
 
     @classmethod
-    def return_all(cls) -> Dict[str, List[Dict[str, str]]]:
-        def to_json(user: User) -> Dict[str, str]:
+    def return_all(cls) -> dict[str, list[dict[str, str]]]:
+        def to_json(user: User) -> dict[str, str]:
             return {"login": user.login, "password": user.password}
 
         return {"users": [to_json(x) for x in User.query.all()]}
 
     @classmethod
-    def delete_all(cls) -> Dict[str, str]:
+    def delete_all(cls) -> dict[str, str]:
         # TODO: добавить try, except
         num_rows_deleted = db.session.query(cls).delete()
         db.session.commit()

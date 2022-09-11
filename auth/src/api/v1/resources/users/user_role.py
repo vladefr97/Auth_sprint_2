@@ -1,5 +1,3 @@
-from typing import Any
-
 from http import HTTPStatus
 
 from api.v1.decorators import superuser_required
@@ -14,7 +12,7 @@ from flask_restful import Resource
 class UserRoleAPI(Resource):
     @jwt_required()
     @superuser_required()
-    def get(self, user_id: str) -> tuple[dict[str, Any], int]:
+    def get(self, user_id: str) -> tuple[dict, type(HTTPStatus)]:
         """
         Get Role method for users
         ---

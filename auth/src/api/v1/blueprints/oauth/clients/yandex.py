@@ -1,5 +1,3 @@
-from typing import Dict
-
 import os
 from http import HTTPStatus
 
@@ -23,7 +21,7 @@ class YandexOAuthClient(OAuthClient):
     def __init__(self):
         super().__init__(YandexOAuthClientCredentials())
 
-    def get_user_info(self, request=None) -> tuple[Dict[str, str], HTTPStatus]:
+    def get_user_info(self, request=None) -> tuple[dict, HTTPStatus]:
         self.client.authorize_access_token()
 
         user_info_response = self.client.get(self.credentials.userinfo_endpoint).json()

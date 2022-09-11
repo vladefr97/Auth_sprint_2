@@ -1,5 +1,3 @@
-from typing import Any
-
 from http import HTTPStatus
 
 from api.v1.parsers import auth_parser
@@ -10,7 +8,7 @@ from flask_restful import Resource
 
 
 class UserLoginAPI(Resource):
-    def post(self) -> tuple[dict[str, Any], int]:
+    def post(self) -> tuple[dict, type(HTTPStatus)]:
         """
         Login method for users
         ---

@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import BaseModel
 
 
@@ -8,5 +6,5 @@ class YandexUserInfoSchema(BaseModel):
     login: str
     client_id: str
     default_email: str
-    emails: List[str]
+    emails: list[str]
     psuid: str

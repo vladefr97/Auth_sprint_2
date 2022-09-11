@@ -1,5 +1,3 @@
-from typing import Dict
-
 from abc import ABC, abstractmethod
 from enum import Enum
 from http import HTTPStatus
@@ -24,7 +22,7 @@ class OAuthClientCredentials(ABC):
     access_token_url: str
     authorize_url: str
     userinfo_endpoint: str
-    client_kwargs: Dict[str, str]
+    client_kwargs: dict[str, str]
 
     @abstractmethod
     def set_credentials(self) -> None:
@@ -55,7 +53,7 @@ class OAuthClient(ABC):
 
     def provide_user_info(
         self, login: str, email: str, social_id: str, social_name: str
-    ) -> tuple[Dict[str, str], HTTPStatus]:
+    ) -> tuple[dict, type(HTTPStatus)]:
         registered_user = User.find_by_login_or_email(login=login, email=email)
         if not registered_user:
             registered_user = User.save_user_with_default_role(
@@ -70,7 +68,7 @@ class OAuthClient(ABC):
         return response, HTTPStatus.OK
 
     @abstractmethod
-    def get_user_info(self, request=None) -> tuple[Dict[str, str], HTTPStatus]:
+    def get_user_info(self, request=None) -> tuple[dict[str, str], HTTPStatus]:
         ...
 
     def get_redirect_uri(self) -> str:

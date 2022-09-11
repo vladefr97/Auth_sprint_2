@@ -1,10 +1,8 @@
 from datetime import datetime
-from typing import Dict
-
-from sqlalchemy.dialects.postgresql import UUID
 
 from db.relational.connection import db
 from db.relational.models.mixins import UUIDMixin
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class UserHistoryMixin(UUIDMixin):
@@ -35,8 +33,8 @@ class UserHistory(db.Model, UUIDMixin):
         db.session.commit()
 
     @classmethod
-    def return_all(cls) -> dict[str, list[dict[str, str]]]:
-        def to_json(user_history: UserHistory) -> Dict[str, str]:
+    def return_all(cls) -> dict:
+        def to_json(user_history: UserHistory) -> dict[str, str]:
             return {
                 "user_id": str(user_history.user_id),
                 "user_agent": user_history.user_agent,
@@ -48,7 +46,7 @@ class UserHistory(db.Model, UUIDMixin):
         return {"user_history": [to_json(x) for x in UserHistory.query.all()]}
 
     @classmethod
-    def delete_all(cls) -> Dict[str, str]:
+    def delete_all(cls) -> dict:
         # TODO: добавить try, except
         num_rows_deleted = db.session.query(cls).delete()
         db.session.commit()

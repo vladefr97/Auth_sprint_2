@@ -4,7 +4,7 @@ from flask_restful import Api
 
 from .extensions import init_extensions
 from .urls import urls
-from .v1.blueprints.oauth.routes import provider_login, auth_provider
+from .v1.blueprints.oauth.routes import auth_provider, provider_login
 
 
 def init_api(app: Flask) -> None:

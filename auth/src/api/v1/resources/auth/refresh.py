@@ -1,5 +1,3 @@
-from typing import Any
-
 from http import HTTPStatus
 
 from api.extensions.block_list import get_blocklist
@@ -14,7 +12,7 @@ jwt_blocklist = get_blocklist()
 
 class TokenRefreshAPI(Resource):
     @jwt_required(refresh=True)
-    def post(self) -> tuple[dict[str, Any], int]:
+    def post(self) -> tuple[dict, type(HTTPStatus)]:
         """
         Refresh token method for users
         ---
