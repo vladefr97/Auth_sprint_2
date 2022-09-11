@@ -6,7 +6,7 @@ from core.config import config
 
 rate_limiter = Limiter(
     key_func=get_remote_address,
-    default_limits=["1 per day"],
+    default_limits=["100 per day"],
     storage_uri=config.REDIS_DSN,
 )
 
