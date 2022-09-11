@@ -2,8 +2,8 @@ from typing import Dict
 
 from http import HTTPStatus
 
+from api.extensions.rate_limit import rate_limiter
 from api.v1.scheme import UserHistoryPaginationScheme, UserHistoryScheme
-from core.utils import rate_limit
 from db.relational.models.user_history import UserHistory
 from flask import request
 from flask_jwt_extended import current_user, jwt_required
@@ -12,7 +12,8 @@ from flask_sqlalchemy import Pagination
 
 
 class UserAllHistoryAPI(Resource):
-    @rate_limit()
+    decorators = [rate_limiter.limit(limit_value="100 per hour")]
+
     @jwt_required()
     def get(self) -> tuple[UserHistoryPaginationScheme, int]:
         """
