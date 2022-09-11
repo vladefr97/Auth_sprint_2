@@ -25,7 +25,7 @@ class UserHistory(db.Model, UserHistoryMixin):
         "user_id", UUID(as_uuid=True), db.ForeignKey("auth.user.id", ondelete="cascade"), nullable=False
     )
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: str):
         super().__init__(**kwargs)
 
     def __repr__(self) -> str:

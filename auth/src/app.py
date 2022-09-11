@@ -12,8 +12,8 @@ configure_tracer()
 
 def main() -> Flask:
     app = Flask(__name__)
-    app.config["JWT_SECRET_KEY"] = config.jwt_secret_key
-    app.config["SECRET_KEY"] = config.app_secret_key
+    app.config["JWT_SECRET_KEY"] = config.JWT_SECRET_KEY
+    app.config["SECRET_KEY"] = config.APP_SECRET_KEY
     init_db(app)
     init_migrate(app)
     init_api(app)
@@ -26,4 +26,4 @@ def main() -> Flask:
 app = main()
 
 if __name__ == "__main__":
-    app.run(debug=config.debug)
+    app.run(debug=config.DEBUG)

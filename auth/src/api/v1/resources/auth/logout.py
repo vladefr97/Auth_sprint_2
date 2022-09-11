@@ -1,16 +1,15 @@
 from typing import Any
 
-from datetime import timedelta
 from http import HTTPStatus
 
 from api.extensions.block_list import get_blocklist
+from core.config import JWT_ACCESS_TOKEN_EXPIRES
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_restful import Resource
 
 block_list = get_blocklist()
 
 # TODO: передать эту на стройку в создание JWT токенов
-ACCESS_EXPIRES = timedelta(hours=1)
 
 
 class UserLogoutAccessAPI(Resource):
@@ -31,5 +30,5 @@ class UserLogoutAccessAPI(Resource):
         """
 
         jti = get_jwt()["jti"]
-        block_list.set_token(key=jti, expire=ACCESS_EXPIRES, value="")
+        block_list.set_token(key=jti, expire=JWT_ACCESS_TOKEN_EXPIRES, value="")
         return {"message": "User logout"}, HTTPStatus.OK

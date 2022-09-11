@@ -1,20 +1,20 @@
-from typing import Union
+from typing import Any, Union
 
 from abc import ABC, abstractmethod
 
 
 class BaseCache(ABC):
-    def __init__(self, connection):
+    def __init__(self, connection: Any):
         self.connection = connection
 
     @abstractmethod
-    def get(self, key: str, **kwargs):
-        pass
+    def get(self, key: str, **kwargs: str) -> Any:
+        ...
 
     @abstractmethod
-    def set_token(self, key: str, expire: int, value: Union[bytes, str]):
-        pass
+    def set_token(self, key: str, expire: int, value: Union[bytes, str]) -> None:
+        ...
 
     @abstractmethod
-    def pipeline(self, **kwargs):
-        pass
+    def pipeline(self, **kwargs: str) -> Any:
+        ...
